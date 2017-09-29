@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Simple login form</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="login">
+      <h1 class="login-heading">
+      <strong>Welcome.</strong> Please login.</h1>
+      <form method="post">
+        <input type="text" name="user" placeholder="Username" required="required" class="input-txt" id="user-input" />
+        <input type="password" name="password" placeholder="Password" required="required" class="input-txt" id="pass-input" />
+        <div class="login-footer">
+          <a href="#" class="lnk">
+              <span class="icon icon--min">ಠ╭╮ಠ</span>
+              I've forgotten something
+            </a>
+          <input type="submit" value="Submit" class="btn btn--right" onclick="validate()">
+
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/index.js"></script>
+
+</body>
+
+</html>
