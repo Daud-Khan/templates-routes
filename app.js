@@ -14,11 +14,12 @@ app.use(require('express-session')({
 	resave: false,
 	saveUninitialized: false
 }));
+app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'hbs');
 app.use(express.static(__dirname+'/views'));
 app.use(passport.initialize());
 app.use(passport.session());
-
+passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
@@ -37,24 +38,56 @@ app.get('/signup', (req, res)=>{
 	res.render('signup.hbs');
 })
 app.post('/signup', (req, res)=>{
-
+	req.body.name
+	req.body.email
+	req.body.username
+	req.body.password
+User.register(new User({name: req.body.name, email: req.body.email, username: req.body.username }), req.body.password, function (err, user) {
+	if (err){
+		console.log(err);
+		return res.render('signup');
+	}
+	passport.authenticate("local")(req, res, function(){
+		res.redirect('dashboard');
+	})
+	
 })
+});
+
 app.get('/login', (req, res)=>{
 	res.render('login.hbs');
 });
-app.get('/dashboard', (req,res)=>{
+app.post("/login",passport.authenticate("local", {
+	successRedirect: "/dashboard",
+	failureRedirect: "/login"
+}) ,(req, res)=>{
+
+});
+app.get('/logout', (req, res)=>{
+	req.logout();
+	res.redirect('/');
+});
+app.get('/dashboard', isLoggedIn ,(req,res)=>{
 	res.render('dashboard.hbs');
 });
-app.get('/user', (req, res)=>{
+app.get('/user', isLoggedIn ,(req, res)=>{
 	res.render('user.hbs');
 });
 
-app.get('/maps', (req, res)=>{
+app.get('/maps', isLoggedIn ,(req, res)=>{
 	res.render('maps.hbs');
 });
-app.get('/notifications', (req, res)=>{
+app.get('/notifications', isLoggedIn ,(req, res)=>{
 	res.render('notifications.hbs');
 });
+
+function isLoggedIn(req, res, next){
+	if(req.isAuthenticated()){
+		return next();
+	}
+	res.redirect('/login');
+};
+
 
 app.listen(3000, ()=>{
 	console.log("The server is running!");
