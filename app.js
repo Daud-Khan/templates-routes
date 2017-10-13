@@ -32,10 +32,10 @@ app.get('/',(req, res)=>{
 	res.redirect('/home');
 });
 app.get('/home', (req, res)=>{
-	res.render('home.hbs');
+	res.render('home');
 });
 app.get('/signup', (req, res)=>{
-	res.render('signup.hbs');
+	res.render('signup');
 })
 app.post('/signup', (req, res)=>{
 	req.body.name
@@ -68,17 +68,17 @@ app.get('/logout', (req, res)=>{
 	res.redirect('/');
 });
 app.get('/dashboard', isLoggedIn ,(req,res)=>{
-	res.render('dashboard.hbs');
+	res.render('dashboard');
 });
 app.get('/user', isLoggedIn ,(req, res)=>{
-	res.render('user.hbs');
+	res.render('user');
 });
 
 app.get('/maps', isLoggedIn ,(req, res)=>{
-	res.render('maps.hbs');
+	res.render('maps');
 });
 app.get('/notifications', isLoggedIn ,(req, res)=>{
-	res.render('notifications.hbs');
+	res.render('notifications');
 });
 
 function isLoggedIn(req, res, next){
