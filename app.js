@@ -6,6 +6,7 @@ var localStrategy = require("passport-local");
 var mongoose = require("mongoose");
 var User = require("./models/User");
 mongoose.connect("mongodb://localhost/user_data");
+const port = process.env.PORT || 3000;
 
 
 var app = express();
@@ -89,6 +90,6 @@ function isLoggedIn(req, res, next){
 };
 
 
-app.listen(3000, ()=>{
+app.listen(port, ()=>{
 	console.log("The server is running!");
 });
