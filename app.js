@@ -70,6 +70,18 @@ app.post('/tweet', (req,res)=>{
 
 });
 });
+
+
+app.post('/findfollowers', (req, res)=>{
+	console.log(req.body);
+	tweet.get('followers/list', { screen_name: req.body.follows },  function (err, data, response){
+		var followers = data.users;
+		res.send(followers);
+	
+});
+});
+
+
 app.post('/geocode', (req,res)=>{
 	console.log(req.body);
 	req.body.geocode
@@ -80,10 +92,13 @@ app.post('/geocode', (req,res)=>{
 			console.log(err)
 		}else{
 	console.log(resp[0].latitude);
-	var code1 = resp[0].latitude;	
+	var code1 = {
+				lat : resp[0].latitude,
+				lon : resp[0].longitude		
+					};	
 	console.log(code1);
 
-	res.send(code1.toString());	
+	res.send(code1);	
 	}
 	});
 	
@@ -115,8 +130,8 @@ app.get('/user', isLoggedIn ,(req, res)=>{
 app.get('/maps', isLoggedIn ,(req, res)=>{
 	res.render('maps');
 });
-app.get('/notifications', isLoggedIn ,(req, res)=>{
-	res.render('notifications');
+app.get('/followers', isLoggedIn ,(req, res)=>{
+	res.render('followers');
 });
 
 function isLoggedIn(req, res, next){
