@@ -83,7 +83,7 @@ app.post('/findfollowers', (req, res)=>{
 
 
 app.post('/geocode', (req,res)=>{
-	console.log(req.body);
+	console.log(req.body,"8888");
 	req.body.geocode
 	//console.log(code);
 	
@@ -97,12 +97,10 @@ app.post('/geocode', (req,res)=>{
 				lon : resp[0].longitude		
 					};	
 	console.log(code1);
-
-	res.send(code1);	
+	res.json(code1);
 	}
+	// res.send(code1);	
 	});
-	
-
 });
 
 app.get('/login', (req, res)=>{
