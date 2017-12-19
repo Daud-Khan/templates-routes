@@ -88,9 +88,7 @@ app.post('/findfollowers', (req, res) => {
 
 	});
 });
-
-
-<<<<<<< HEAD
+//done
 app.post('/geocode', (req, res) => {
 	GeoCoder.geocode(req.body.geocode, function (err, resp) {
 		if (err) {
@@ -102,26 +100,6 @@ app.post('/geocode', (req, res) => {
 			};
 			res.json(code1);
 		}
-=======
-app.post('/geocode', (req,res)=>{
-	console.log(req.body,"8888");
-	req.body.geocode
-	//console.log(code);
-	
-	GeoCoder.geocode(req.body.geocode, function(err,resp){
-		if(err){
-			console.log(err)
-		}else{
-	console.log(resp[0].latitude);
-	var code1 = {
-				lat : resp[0].latitude,
-				lon : resp[0].longitude		
-					};	
-	console.log(code1);
-	res.json(code1);
-	}
-	// res.send(code1);	
->>>>>>> 805fac4a1ccb57488700a6b7f3a34225e1b0e4a6
 	});
 });
 
