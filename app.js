@@ -88,7 +88,7 @@ app.post('/findfollowers', (req, res) => {
 
 	});
 });
-//done
+//done1
 app.post('/geocode', (req, res) => {
 	GeoCoder.geocode(req.body.geocode, function (err, resp) {
 		if (err) {
@@ -105,6 +105,7 @@ app.post('/geocode', (req, res) => {
 
 app.post('/countryWise', (req, res) => {
 	var newTweets =[];
+	console.log("here");
 	GeoCoder.geocode(req.body.country, function (err, resp) {
 		if (err) {
 			console.log(err)
@@ -118,6 +119,7 @@ app.post('/countryWise', (req, res) => {
 			var bottomLong = bbox.box().bottomRightLongitude+1;
 			var bottomLat = bbox.box().bottomRightLatitude-1;
 			var sanFrancisco = [bbox.box().topLeftLongitude.toString(), bottomLat.toString(), bottomLong.toString(), bbox.box().topLeftLatitude.toString()]
+			console.log(sanFrancisco);
 			var stream = tweet.stream('statuses/filter', {
 				track: req.body.tweet,
 				language: 'en',
@@ -125,19 +127,20 @@ app.post('/countryWise', (req, res) => {
 			})
 
 			stream.on('tweet', function (tweets) {
-				newTweets.push(tweets);
+				if(newTweets.length != 30){
+					newTweets.push(tweets);
+
+				}else{
+					stream.stop();
+					res.send(newTweets);
+				}
 			})
-			setTimeout(function(){
-				stream.stop();
-				res.send(newTweets);
-			},10000);
 			
 		}
 	})
 })
 app.post('/countryTweets',function(req,res){
 	var newTweets=[];
-	console.log("yayy");
 	GeoCoder.geocode(req.body.country, function (err, resp) {
 		if (err) {
 			console.log(err)
@@ -151,23 +154,20 @@ app.post('/countryTweets',function(req,res){
 			bbox.pushCoordinate(code1.lat, code1.lon);
 			var bottomLong = bbox.box().bottomRightLongitude+1;
 			var bottomLat = bbox.box().bottomRightLatitude-1;
-			var sanFrancisco = [bbox.box().topLeftLongitude.toString(), bottomLat.toString(), bottomLong.toString(), bbox.box().topLeftLatitude.toString()]
-			// var sanFrancisco = [ '-122.75', '36.8', '-121.75', '37.8' ]
+			var sanFrancisco1 = [bbox.box().topLeftLongitude.toString(), bottomLat.toString(), bottomLong.toString(), bbox.box().topLeftLatitude.toString()]
+			console.log(sanFrancisco1);
 			var stream = tweet.stream('statuses/filter', {
-				locations: sanFrancisco
+				locations: sanFrancisco1
 			})
 			stream.on('tweet', function (tweets) {
-				newTweets.push(tweets);
-			})
-			setTimeout(function(){
-				stream.stop();
-				console.log(newTweets);
-				if(newTweets.length==0){
-					res.send([{text:'No Tweets Available',user:{name:'Daud'}}])
+				if(newTweets.length != 30){
+					newTweets.push(tweets);
+
 				}else{
-				res.send(newTweets);
+					stream.stop();
+					res.send(newTweets);
 				}
-			},20000);
+			})
 			
 		}
 	})
