@@ -4271,6 +4271,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
     padding-bottom: 15px;
     font-weight: 400;
     font-size: 12px;
+    margin-top: 5px;
     text-transform: uppercase;
     border-radius: 3px;
 }

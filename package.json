@@ -15,6 +15,8 @@
     "express": "^4.16.0",
     "express-session": "^1.15.6",
     "express-sessions": "^1.0.6",
+    "geocoordinate": "^1.0.1",
+    "geolib": "^2.0.24",
     "hbs": "^4.0.1",
     "mongoose": "^4.12.0",
     "node-geocoder": "^3.21.1",
